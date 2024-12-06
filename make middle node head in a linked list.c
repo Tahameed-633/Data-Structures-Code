@@ -58,9 +58,10 @@ struct Node *create_linked_list()
         struct Node *current=head,*temp=NULL;
         int length=get_length(head);
         int mid_index=length/2;
-       for (int i = 0; i <= mid_index; i++) {
-        temp = current;
-        current = current->next;
+       for (int i = 0; i < mid_index; i++) {
+        temp->next=current->next;
+        current->next=hhead;
+           head=current;
     }
 
 
