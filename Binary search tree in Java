@@ -1,0 +1,110 @@
+package binary_search_tree;
+import java.util.Scanner;
+public class Root {
+	int data;
+	Root left;
+	Root right;
+	Root(int data)
+	{
+		this.data=data;
+		this.left=null;
+		this.right=null;
+	}
+	public static  Root insert_node(Root root,int item)
+	{
+		Root temp=null;
+		temp=new Root(item);
+		if(root==null)
+		{
+			root=temp;
+			return root;
+		}
+		else if(item>root.data)
+		{
+			root.right=insert_node(root.right,item);
+		}
+		else
+		{
+			root.left=insert_node(root.left,item);
+		}
+		return root;
+	}
+	public static void in_order_traverse(Root root)
+	{
+		if(root==null)
+			return;
+		in_order_traverse(root.left);
+		System.out.print(root.data+"\t");
+		in_order_traverse(root.right);
+	}
+	public static Root find_min(Root root)
+	{
+		if(root.left==null)
+		{
+			return root;
+		}
+		return find_min(root.left);
+	}
+	public static Root delete_node(Root root,int item)
+	{
+		Root temp=null;
+		if(root==null)
+			return root;
+		 if(item>root.data)
+			root.right=delete_node(root.right,item);
+		else if(item<root.data)
+			root.left=delete_node(root.left,item);
+		else
+		{
+			if(root.left==null && root.right==null)
+			{
+				root=null;
+				return root;
+			}
+		
+			else if(root.left==null&&root.right!=null)
+			{
+				 temp=root;
+				root=root.right;
+				temp=null;
+				return root;
+			}
+			else if(root.right==null&&root.left!=null)
+			{
+				temp=root;
+				root=root.left;
+				temp=null;
+				return root;
+			}
+			else
+			{
+				temp=find_min(root.right);
+				root.data=temp.data;
+				root.right=delete_node(root.right,temp.data);
+			}
+		}
+		return root;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		Root root=null;
+		int size,item,key;
+		System.out.println("Enter the size of the BST: ");
+		size=input.nextInt();
+		System.out.println("Enter the elements of BST: ");
+		for(int i=1;i<=size;i++)
+		{
+			item=input.nextInt();
+			root=insert_node(root,item);
+		}
+		System.out.println("In order traversal: ");
+		in_order_traverse(root);
+		System.out.println("\nEnter the key to delete:\n ");
+		key=input.nextInt();
+		root=delete_node(root,key);
+		System.out.println("BST after delating the targeted element:\n ");
+		in_order_traverse(root);
+	}
+
+}
